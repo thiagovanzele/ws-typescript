@@ -13,9 +13,9 @@ export class NegociacaoController {
   private mensagemView = new MensagemView("#mensagemView");
 
   constructor() {
-    this.inputData = document.querySelector("#data");
-    this.inputQuantidade = document.querySelector("#quantidade");
-    this.inputValor = document.querySelector("#valor");
+    this.inputData = document.querySelector("#data") as HTMLInputElement;
+    this.inputQuantidade = document.querySelector("#quantidade") as HTMLInputElement;
+    this.inputValor = document.querySelector("#valor") as HTMLInputElement;
     this.negociacoesView.update(this.negociacoes);
   }
 
@@ -44,7 +44,7 @@ export class NegociacaoController {
   private atualizaView(): void {
     this.mensagemView.update("Negociação adicionada com sucesso");
     this.negociacoesView.update(this.negociacoes);
-    const mensagemElement = document.querySelector("#mensagemView");
+    const mensagemElement = document.querySelector("#mensagemView") as HTMLElement;
 
     this.limpaElemento(mensagemElement);
   }
@@ -55,7 +55,7 @@ export class NegociacaoController {
       negociacao.data.getDay() === DiaDaSeamana.SABADO
     ) {
       this.mensagemView.update("Data inválida");
-      const mensagemElement = document.querySelector("#mensagemView p");
+      const mensagemElement = document.querySelector("#mensagemView p") as HTMLElement;
       mensagemElement.classList.remove("alert-success");
       mensagemElement.classList.add("alert-danger");
       this.limpaElemento(mensagemElement);
