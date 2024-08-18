@@ -1,14 +1,12 @@
 import { DiaDaSeamana } from "../enums/dia-da-semana.js";
 import { Negociacao } from "../models/negociacao.js";
 import { Negociacoes } from "../models/negociacoes.js";
-import { NegociacoesService } from "../services/negociacoes-service.js";
-import { imprimir } from "../utils/imprimit.js";
 import { MensagemView } from "../views/mensagem-view.js";
 import { NegociacoesView } from "../views/negociacoes-view.js";
 export class NegociacaoController {
     constructor() {
         this.negociacoes = new Negociacoes();
-        this.negociacoesView = new NegociacoesView("#negociacoes-view");
+        this.negociacoesView = new NegociacoesView("#negociacoes-view", true);
         this.mensagemView = new MensagemView("#mensagemView");
         this.inputData = document.querySelector("#data");
         this.inputQuantidade = document.querySelector("#quantidade");
@@ -23,22 +21,6 @@ export class NegociacaoController {
         this.negociacoes.adicionaNegociacao(negociacao);
         this.atualizaView();
         this.limparFormulario();
-        imprimir(negociacao);
-    }
-    importaDados() {
-        NegociacoesService.obterNegociacoesDoDia()
-            .then(negociacoesDeHoje => {
-            return negociacoesDeHoje.filter(negociacoesDeHoje => {
-                return !this.negociacoes.listarNegociacoes()
-                    .some(negociacao => negociacao.ehIgual(negociacoesDeHoje));
-            });
-        })
-            .then(negociacoesDeHjoje => {
-            for (let negociacao of negociacoesDeHjoje) {
-                this.negociacoes.adicionaNegociacao(negociacao);
-            }
-            this.negociacoesView.update(this.negociacoes);
-        });
     }
     limparFormulario() {
         this.inputData.value = "";
